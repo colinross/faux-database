@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+require "bundler/setup"
+require "faux/database"
+
+if ARGV.empty?
+  puts "Usage: generate <config_file>"
+  exit 1
+else
+  config_file = ARGV[0]
+  unless File.exist?(config_file)
+      puts "Config file not found: #{config_file}"
+      exit 1
+  end
+  config=YAML.load_file(config_file)
+  Faux::Database::Generator.new(config)&&.generate
+end
+
